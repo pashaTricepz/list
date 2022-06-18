@@ -1,4 +1,5 @@
 #include "MyList.h"
+
 template<typename T>
 void MyList<T>::create_first_node(const T& date) {
 	head = new Node<T>;
@@ -121,14 +122,14 @@ T* iterator<T>::operator->() {
 }
 
 template<typename T>
-typename iterator<T>& iterator<T>::operator++() {
-	ptr = ptr->next;
-	return *this;
+std::ostream& operator<<(std::ostream& os, const iterator<T>& it) {
+	return os << it.date;
 }
 
 template<typename T>
-std::ostream& operator<<(std::ostream& os, const iterator<T>& it) {
-	return os << it.date;
+typename iterator<T>& iterator<T>::operator++() {
+	ptr = ptr->next;
+	return *this;
 }
 
 template<typename T>
@@ -138,12 +139,26 @@ typename iterator<T>& iterator<T>::operator--() {
 }
 
 template<typename T>
-bool iterator<T>::operator==(iterator<T> const& right) const {
+typename iterator<T> iterator<T>::operator++(int) {
+	iterator<T> tmp = ptr;
+	ptr = ptr->next;
+	return tmp;
+}
+
+template<typename T>
+typename iterator<T> iterator<T>::operator--(int) {
+	iterator<T> tmp = ptr;
+	ptr = ptr->prev;
+	return tmp;
+}
+
+template<typename T>
+bool iterator<T>::operator==(const iterator<T>& right) const {
 	return ptr == right.ptr;
 }
 
 template<typename T>
-bool iterator<T>::operator!=(iterator<T> const& right) const {
+bool iterator<T>::operator!=(const iterator<T>& right) const {
 	return !(ptr == right.ptr);
 }
 

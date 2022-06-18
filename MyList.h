@@ -11,16 +11,19 @@ struct Node {
 
 template<typename T>
 struct iterator {
+private:
 	Node<T>* ptr = nullptr;
-
+public:
 	iterator(Node<T>* ptr);
 	T& operator* ();
 	T* operator-> ();
 	iterator<T>& operator++();
 	iterator<T>& operator--();
+	iterator<T> operator++(int);
+	iterator<T> operator--(int);
 	friend std::ostream& operator<<(std::ostream &os, const iterator<T>& it);
-	bool operator ==(iterator const & right) const;
-	bool operator !=(iterator const & right) const;
+	bool operator ==(const iterator & right) const;
+	bool operator !=(const iterator & right) const;
 };
 
 template<typename T>
